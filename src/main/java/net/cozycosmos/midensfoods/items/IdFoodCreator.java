@@ -31,9 +31,10 @@ public class IdFoodCreator implements Listener {
 
             ItemStack foodItem = GenerateFoodItemstack.withID(recipe);
             foodItem.setAmount(config.getInt("Recipes." + recipe + ".Recipe.Amount",1));
-
+            String recipeType = config.getString("Recipes." + recipe + ".Recipe-Type");
+            if (recipeType == null) recipeType = "";
             //IF the recipe is a furnace recipe
-            if(config.getString("Recipes." + recipe + "..Recipe-Type").equalsIgnoreCase("Furnace")) {
+            if(recipeType.equalsIgnoreCase("Furnace")) {
                 NamespacedKey Key = new NamespacedKey(plugin, recipe);
 
                 RecipeChoice ingr;
@@ -51,9 +52,9 @@ public class IdFoodCreator implements Listener {
                     Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Error! Ingredient " + config.getString("Recipes." + recipe + ".Recipe.Ingredient") + " may not be a valid ingredient!");
                     er.printStackTrace();
                 }
-                
 
-            } else if(config.getString("Recipes." + recipe + "..Recipe-Type").equalsIgnoreCase("Blast Furnace")) {
+
+            } else if(recipeType.equalsIgnoreCase("Blast Furnace")) {
                 NamespacedKey Key = new NamespacedKey(plugin, recipe);
 
                 RecipeChoice ingr;
@@ -76,7 +77,7 @@ public class IdFoodCreator implements Listener {
             }
 
             //IF the "Recipes." + recipe is a crafting table recipe
-            else if(config.getString("Recipes." + recipe + ".Recipe-Type").equalsIgnoreCase("Shaped")) {
+            else if(recipeType.equalsIgnoreCase("Shaped")) {
 
                 NamespacedKey Key = new NamespacedKey(plugin, recipe);
                 ShapedRecipe theRecipe = new ShapedRecipe(Key, foodItem);
@@ -108,11 +109,11 @@ public class IdFoodCreator implements Listener {
             }
 
 
-            else if (config.getString("Recipes." + recipe + ".Recipe-Type").equalsIgnoreCase("None")) {
+            else if (recipeType.equalsIgnoreCase("None")) {
                 //Do nothing, no recipe needed! This statement is only here to prevent the error
             }
 
-            else if(config.getString("Recipes." + recipe + ".Recipe-Type").equalsIgnoreCase("Smoker")) {
+            else if(recipeType.equalsIgnoreCase("Smoker")) {
 
                 NamespacedKey Key = new NamespacedKey(plugin, recipe);
 
@@ -136,7 +137,7 @@ public class IdFoodCreator implements Listener {
 
             }
 
-            else if(config.getString("Recipes." + recipe + ".Recipe-Type").equalsIgnoreCase("Campfire")) {
+            else if(recipeType.equalsIgnoreCase("Campfire")) {
                 NamespacedKey Key = new NamespacedKey(plugin, recipe);
                 CampfireRecipe newCampRecipe;
 
@@ -161,7 +162,7 @@ public class IdFoodCreator implements Listener {
 
             }
 
-            else if(config.getString("Recipes." + recipe + ".Recipe-Type").equalsIgnoreCase("Shapeless")) {
+            else if(recipeType.equalsIgnoreCase("Shapeless")) {
                 NamespacedKey Key = new NamespacedKey(plugin, recipe);
                 ShapelessRecipe newShapelessRecipe = new ShapelessRecipe(Key, foodItem);
                 config.getConfigurationSection("Recipes." + recipe + ".Recipe.Ingredients").getKeys(false).forEach(Ingredient -> {
